@@ -699,6 +699,7 @@ function textPacking(ext)
          ext.endsWith(".mtd") || 
          ext.endsWith(".ts") || 
          ext.endsWith(".qs") || 
+	 ext.endsWith(".py") ||
          ext.endsWith(".xml") || 
          ext.endsWith(".xpm") || 
          ext.endsWith(".svg");
@@ -706,7 +707,7 @@ function textPacking(ext)
 
 function binaryPacking(ext)
 {
-  return ext.endsWith(".qs");
+  return ext.endsWith(".qs") || ext.endsWith(".py");
 }
 
 function loadModules(input, warnBackup)
@@ -1465,6 +1466,7 @@ function exportModule(idMod, dirBasePath)
         sys.fileWriteIso(dirPath + "/forms/" + name, content);
         break;
       case ".qs":
+      case ".py":
         sys.fileWriteIso(dirPath + "/scripts/" + name, content);
         break;
       case ".qry":
@@ -1602,6 +1604,8 @@ function importModule(modPath)
       return false;
     if (!importFiles(fileMod.path, "*.qs", mod.id))
       return false;
+    if (!importFiles(fileMod.path, "*.py", mod.id))
+      return false;
     if (!importFiles(fileMod.path, "*.qry", mod.id))
       return false;
     if (!importFiles(fileMod.path, "*.mtd", mod.id))
@@ -1663,6 +1667,7 @@ function importFile(filePath, idMod)
   var name = file.name;
   if ((!AQUtil.isFLDefFile(content) && 
        !name.endsWith(".qs") && 
+       !name.endsWith(".py") &&
        !name.endsWith(".ar") && 
        !name.endsWith(".svg")) || 
       name.endsWith("untranslated.ts"))

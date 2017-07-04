@@ -111,6 +111,7 @@ function editarFichero() {
       this.setDisabled(false);
       break;
     case ".qs":
+    case ".py":
       this.setDisabled(true);
       var editor = new FLScriptEditor(nombre);
       editor.exec();
